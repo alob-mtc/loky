@@ -59,7 +59,21 @@ app.post(rootEndPoint + '/getdata', function(req, res){
     res.status(200).json(newData);
 });
 
-
+app.get('/', function(req, res){
+    const header = req.header;
+    res.json({
+        headerData: header,
+        date: new Date(),
+        message: "This is Loky service",
+        endPoint: {
+            rootEndPoint: rootEndPoint,
+            api_1: '[GET]=> /countries ',
+            api_2: '[GET]=>  /api/v1/',
+            api_3: '[GET]=> /lga?stateId=ID',
+            api_4: '[GET]=> /getdata'
+        }
+    });
+});
 
 app.listen(process.env.PORT || 3000);
 console.log('Server litening......');
