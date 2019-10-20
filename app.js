@@ -6,8 +6,6 @@ const findData = require('./utile/index');
 // const states_ = require('./data/nigeria.state.js');
 let states_ = require('./data/nigeria.state');
 
-console.table(states_);
-
 var app = express();
 app.use(cors());
 
