@@ -45,7 +45,15 @@ returns an Array of lgas for the state with the ID
 
 ```js
     // post data
-
+    {
+        countryId: ID,
+        stateId: ID,
+        lgaId: ID
+    }
     // retrun data
-
+    {
+        country: String,
+        state: String,
+        lga: String
+    }
 ```
