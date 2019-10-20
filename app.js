@@ -60,20 +60,69 @@ app.post(rootEndPoint + '/getdata', function(req, res){
 });
 
 app.get('/', function(req, res){
-    const header = req.header;
-    res.json({
-        headerData: header,
-        date: new Date(),
-        message: "This is Loky service",
-        endPoint: {
-            rootEndPoint: rootEndPoint,
-            api_1: '[GET]=> /countries ',
-            api_2: '[GET]=>  /api/v1/',
-            api_3: '[GET]=> /lga?stateId=ID',
-            api_4: '[GET]=> /getdata'
+    const httpheaders = req.headers;
+    var body = '';
+    for (const key in httpheaders) {
+        if (httpheaders.hasOwnProperty(key)) {
+            const element = httpheaders[key];
+            body += `
+                <tr>
+                    <td>${key}</td>
+                    <td>${element}</td>
+                </tr>
+            `;
         }
-    });
+    }
+    var table = `
+        <table>
+            <tr>
+                <th>Inex</th>
+                <th>Value</th>
+            </tr>
+            ${body}
+        </table>
+    `;
+    res.send(`
+    <!DOCTYPE html>
+    <html>
+        <head>
+        <style>
+        table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        max-width: 80rem;
+        }
+        
+        td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+        background-color: #dddddd;
+        }
+        </style>
+        </head>
+        <body>
+            <center>
+                <div>
+                    <h1>Locky Service</h1>
+                    <h3>${new Date()}</h3>
+                    <h3>Root endpoint: ${rootEndPoint}</h3>
+                    <h3>api_1: '[GET]=>  /api/v1/countries</h3>
+                    <h3>api_2: '[GET]=> /lga?stateId=ID</h3>
+                    <h3>api_3: '[GET]=> /getdata</h3>
+                </div>
+                <h2>HTTP Headers</h2>
+                ${table}
+            </center>
+        
+        </body>
+    </html>
+        
+    `)
 });
 
 app.listen(process.env.PORT || 3000);
-console.log('Server litening......');
+console.log('Server listening............');
